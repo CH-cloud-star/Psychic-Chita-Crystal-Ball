@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6c5ce7">
+  <link rel="manifest" href="manifest.json">
+  <title>Crystal Ball Soul Connection</title>
+  <style>
+    body {
+      background: radial-gradient(circle at center, #0d0d0d, #1a1a2e);
+      color: #f2e9e4;
+      font-family: 'Georgia', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .crystal {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #a29bfe, #6c5ce7);
+      box-shadow: 0 0 40px #a29bfe, 0 0 80px #6c5ce7;
+      margin: 20px auto;
+      animation: pulse 3s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+    input, button {
+      padding: 12px;
+      font-size: 1rem;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      max-width: 90%;
+    }
+    button {
+      background-color: #6c5ce7;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #a29bfe;
+    }
+    .message {
+      margin-top: 20px;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #fcd5ce;
+      padding: 0 1rem;
+    }
+    video.background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body>
+  <video autoplay loop muted playsinline class="background-video">
+    <source src="https://www.videvo.net/videvo_files/converted/2016_08/preview/160722_C_014.mp465831.webm" type="video/webm">
+    Your browser does not support the video tag.
+  </video>
+
+  <audio autoplay loop>
+    <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <h1>🔮 Crystal Ball Soul Connection 🔮</h1>
+  <div class="crystal"></div>
+  <div>
+    <input type="text" id="name" placeholder="Enter your name..." />
+    <br />
+    <input type="text" id="question" placeholder="Ask your question..." />
+    <br />
+    <button onclick="revealMessage()">Reveal My Message</button>
+  </div>
+  <div class="message" id="output"></div>
+
+  <script>
+    const messages = [
+      "✨ Your path is already unfolding — trust the timing of your soul.",
+      "🌕 The answer lies in stillness. Go inward to receive.",
+      "🔥 Something must be released before the door opens.",
+      "🌿 A blessing is blooming — you must believe to see it.",
+      "💧 The tears you've cried water the seeds of your future joy.",
+      "🦋 Transformation is near — but only if you choose it."
+    ];
+
+    function revealMessage() {
+      const name = document.getElementById('name').value.trim();
+      const question = document.getElementById('question').value.trim();
+      const output = document.getElementById('output');
+
+      if (!name || !question) {
+        output.textContent = "Please enter your name and question.";
+        return;
+      }
+
+      const message = messages[Math.floor(Math.random() * messages.length)];
+      output.innerHTML = `<strong>${name}</strong>, the crystal whispers: <br><br> \"${message}\"`;
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
+  </script>
+</body>
+</html>
